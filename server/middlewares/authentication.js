@@ -7,6 +7,6 @@ module.exports = (req, res, next) => {
     req.loggedIn = payload
     next()
   } catch (err) {
-    console.log(err)
+    next(err)
   }
 }

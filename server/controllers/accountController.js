@@ -44,7 +44,10 @@ class AccountController {
 
     Account.findById(id)
       .then((result) => {
-        if (result.owner !== owner) {
+        if (!result) {
+          throw { errCode: 404, msg: 'Account not found' }
+        }
+        if (String(result.owner) !== owner) {
           throw { errCode: 403, msg: 'You are not authorized' }
         } else {
           return Account.deleteOne({ _id: id })
@@ -53,6 +56,7 @@ class AccountController {
       .then((response) => {
         res.status(200).json({
           msg: 'Account removed',
+          response,
         })
       })
       .catch(next)
@@ -70,7 +74,7 @@ class AccountController {
 
     Account.findById(id)
       .then((result) => {
-        if (result.owner !== owner) {
+        if (String(result.owner) !== owner) {
           throw { errCode: 403, msg: 'You are not authorized' }
         } else {
           return Account.findByIdAndUpdate(id, updatedData)
@@ -79,6 +83,7 @@ class AccountController {
       .then((response) => {
         res.status(201).json({
           msg: 'Account updated',
+          response,
         })
       })
       .catch(next)
