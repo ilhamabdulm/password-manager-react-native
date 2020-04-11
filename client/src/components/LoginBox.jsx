@@ -1,8 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
 function LoginBox() {
+  const { navigate } = useNavigation()
+
   return (
     <View style={styles.loginBox}>
       <Text style={styles.loginText}>Login</Text>
@@ -13,10 +16,15 @@ function LoginBox() {
           secureTextEntry={true}
           placeholder="password"
         />
-        <TouchableOpacity style={styles.submitBtn}>
+        <TouchableOpacity
+          style={styles.submitBtn}
+          onPress={() => navigate('Home')}
+        >
           <Text style={styles.submitText}>Submit</Text>
         </TouchableOpacity>
-        <Text style={styles.registerText}>Click here to Register</Text>
+        <TouchableOpacity>
+          <Text style={styles.registerText}>Click here to Register</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
