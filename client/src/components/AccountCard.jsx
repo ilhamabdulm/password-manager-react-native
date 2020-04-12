@@ -1,17 +1,23 @@
 import React from 'react'
 import { TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
-function AccountCard() {
+function AccountCard({ url }) {
+  const domain = url.substring(url.lastIndexOf('/') + 1)
+  const { navigate } = useNavigation()
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigate('Details')}>
       <View style={styles.containerBox}>
         <Image
-          source={require('../../assets/google-logo.png')}
+          source={{
+            uri: `https://logo.clearbit.com/${domain}`,
+          }}
           style={styles.imageLogo}
         />
-        <Text style={styles.urlText}>https://google.com</Text>
-        <TouchableOpacity>
+        <Text style={styles.urlText}>{url}</Text>
+        <TouchableOpacity onPress={() => navigate('Details')}>
           <MaterialIcons
             name="keyboard-arrow-right"
             size={30}

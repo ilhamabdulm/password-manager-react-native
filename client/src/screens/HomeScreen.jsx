@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  View,
-  ImageBackground,
-  StyleSheet,
-  Dimensions,
-} from 'react-native'
+import { View, ImageBackground, StyleSheet, Dimensions } from 'react-native'
 
 import WelcomeCard from '../components/WelcomeCard'
 import AccountCard from '../components/AccountCard'
@@ -24,9 +19,9 @@ function HomeScreen() {
         contentContainerStyle={{ alignItems: 'center' }}
       >
         {/* <Text>There are no account stored here</Text> */}
-        <AccountCard />
-        <AccountCard />
-        <AccountCard />
+        <AccountCard url="https://google.com" />
+        <AccountCard url="https://facebook.com" />
+        <AccountCard url="https://twitter.com" />
       </ScrollView>
     </ImageBackground>
   )

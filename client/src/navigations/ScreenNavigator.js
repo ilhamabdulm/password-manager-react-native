@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import LoginScreen from '../screens/LoginScreen'
 import HomeScreen from '../screens/HomeScreen'
+import DetailsScreen from '../screens/DetailsScreen'
 
 import ProfileBtn from '../components/ProfileBtn'
 
@@ -36,6 +37,11 @@ function ScreenNavigator() {
         name="Home"
         component={HomeScreen}
         options={{ ...headerOptions, headerLeft: null }}
+      />
+      <Stack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={headerOptions}
       />
     </Stack.Navigator>
   )
