@@ -1,30 +1,90 @@
-import React from 'react'
-import { View, ImageBackground, StyleSheet, Dimensions } from 'react-native'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  RefreshControl,
+  AsyncStorage,
+  Text,
+} from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
 import WelcomeCard from '../components/WelcomeCard'
 import AccountCard from '../components/AccountCard'
-import { ScrollView } from 'react-native-gesture-handler'
+import { fetchAccount } from '../store/actions/accountActions'
 
 function HomeScreen() {
-  const { userInfo } = useSelector((state) => state.userReducers)
+  const { userInfo, statusLogin } = useSelector((state) => state.userReducers)
+  const { accountList } = useSelector((state) => state.accountReducers)
+  const [refreshing, setRefreshing] = useState(false)
+  const { navigate } = useNavigation()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!statusLogin) {
+      navigate('Login')
+    }
+  }, [statusLogin])
+
+  useEffect(() => {
+    console.log('HELLO')
+    fetchAccountData()
+  }, [])
+
+  const fetchAccountData = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token')
+      dispatch(fetchAccount(token))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const onRefresh = () => {
+    console.log('Refreshing account list')
+    setRefreshing(true)
+    dispatch(fetchAccountData())
+    setTimeout(() => {
+      setRefreshing(false)
+    }, 1000)
+  }
 
   return (
     <ImageBackground
       source={require('../../assets/home-bg.png')}
       style={styles.imageBackground}
     >
+      <Text
+        style={{
+          color: '#fafafa',
+          fontSize: 24,
+          marginTop: 20,
+          fontWeight: '700',
+          letterSpacing: 1,
+        }}
+      >
+        Account List
+      </Text>
       <View style={styles.welcomeCard}>
         <WelcomeCard name={userInfo.name} />
       </View>
       <ScrollView
         style={styles.accountList}
         contentContainerStyle={{ alignItems: 'center' }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
-        {/* <Text>There are no account stored here</Text> */}
-        <AccountCard url="https://google.com" />
-        <AccountCard url="https://facebook.com" />
-        <AccountCard url="https://twitter.com" />
+        {accountList.length < 1 ? (
+          <Text>There are no account stored here</Text>
+        ) : (
+          accountList.map((account, idx) => (
+            <AccountCard url={account.url} id={account._id} key={idx} />
+          ))
+        )}
       </ScrollView>
     </ImageBackground>
   )
@@ -37,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   welcomeCard: {
-    marginTop: 70,
+    marginTop: 20,
   },
   accountList: {
     marginVertical: 20,

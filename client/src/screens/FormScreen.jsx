@@ -1,14 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View,
   Text,
   ImageBackground,
   StyleSheet,
   TextInput,
+  AsyncStorage,
 } from 'react-native'
 import ActionButton from '../components/ActionButton'
+import { useDispatch } from 'react-redux'
 
-function FormScreen() {
+import { addAccount } from '../store/actions/accountActions'
+
+function FormScreen({ navigation }) {
+  const [url, setUrl] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    return () => {
+      setPassword('')
+      setUrl('')
+      setUsername('')
+    }
+  }, [])
+
+  const handleSubmit = async () => {
+    const inputData = {
+      url,
+      username,
+      password,
+    }
+    const token = await AsyncStorage.getItem('token')
+    dispatch(addAccount(token, inputData))
+    navigation.navigate('Home')
+  }
+
   return (
     <ImageBackground
       source={require('../../assets/form-bg.png')}
@@ -18,13 +46,18 @@ function FormScreen() {
         <Text style={styles.titleText}>Manage Account</Text>
         <View style={styles.formGroup}>
           <Text style={styles.formText}>URL</Text>
-          <TextInput style={styles.formInput} placeholder="full name" />
+          <TextInput
+            style={styles.formInput}
+            placeholder="url"
+            onChangeText={(text) => setUrl(text)}
+          />
         </View>
         <View style={styles.formGroup}>
           <Text style={styles.formText}>Email or Username</Text>
           <TextInput
             style={styles.formInput}
             placeholder="test@mail.com or username"
+            onChangeText={(text) => setUsername(text)}
           />
         </View>
         <View style={styles.formGroup}>
@@ -33,11 +66,12 @@ function FormScreen() {
             style={styles.formInput}
             secureTextEntry={true}
             placeholder="password"
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
         <ActionButton
           name="Submit"
-          action={() => console.log('Submit')}
+          action={() => handleSubmit()}
           color="#4BD369"
         />
       </View>

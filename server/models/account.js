@@ -17,6 +17,9 @@ const accountSchema = new Schema({
     type: Types.ObjectId,
     ref: 'User',
   },
+  logo: {
+    type: String,
+  },
 })
 
 const Account = model('Account', accountSchema)

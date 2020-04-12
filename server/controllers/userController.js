@@ -43,10 +43,27 @@ class UserController {
             res.status(200).json({
               message: 'Login success',
               token: token,
+              user: {
+                name: result.name,
+                email: result.email,
+              },
               status: 200,
             })
           }
         }
+      })
+      .catch(next)
+  }
+
+  static getUserInfo(req, res, next) {
+    const id = req.loggedIn._id
+    User.findById(id)
+      .then((result) => {
+        const payload = {
+          name: result.name,
+          email: result.email,
+        }
+        res.status(200).json(payload)
       })
       .catch(next)
   }

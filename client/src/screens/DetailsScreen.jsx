@@ -1,32 +1,102 @@
-import React from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, Dimensions, AsyncStorage } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
+import {
+  fetchDetails,
+  clearDetails,
+  removeAccount,
+  editAccount,
+} from '../store/actions/accountActions'
 import DetailText from '../components/DetailText'
 import ActionButton from '../components/ActionButton'
 
-function DetailsScreen() {
+function DetailsScreen({ route, navigator }) {
+  const [url, setUrl] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const accountId = route.params.id
+  const { accountData, accountList } = useSelector(
+    (state) => state.accountReducers
+  )
+  const dispatch = useDispatch()
+  const { navigate } = useNavigation()
+
+  useEffect(() => {
+    getDetails()
+    return () => {
+      dispatch(clearDetails())
+    }
+  }, [])
+
+  useEffect(() => {
+    const isAvalaible = accountList.findIndex((acc) => acc._id === accountId)
+    if (isAvalaible < 0) {
+      navigate('Home')
+    }
+  }, [accountList])
+
+  const getDetails = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token')
+      dispatch(fetchDetails(accountId, token))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const deleteAccount = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token')
+      dispatch(removeAccount(accountId, token))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const handleEdit = async () => {
+    try {
+      const inputData = {
+        url,
+        username,
+        password,
+      }
+      console.log(inputData)
+      const token = await AsyncStorage.getItem('token')
+      dispatch(editAccount(token, inputData, accountId))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.topElement}>
         <Text style={styles.titleText}>Account Details</Text>
         <View style={styles.detailsBox}>
-          <DetailText title="URL" subtitle="https://google.com" />
+          <DetailText
+            title="URL"
+            subtitle={accountData.url}
+            action={(text) => setUrl(text)}
+          />
           <DetailText
             title="Username or Email"
-            subtitle="ilhamabdulmalik21@gmail.com"
+            subtitle={accountData.username}
+            action={(text) => setUsername(text)}
           />
-          <DetailText title="Password" subtitle="secret123" />
+          <DetailText
+            title="Password"
+            subtitle={accountData.password}
+            action={(text) => setPassword(text)}
+          />
         </View>
       </View>
       <View style={styles.bottomElement}>
-        <ActionButton
-          name="Edit"
-          action={() => console.log('Edit')}
-          color="#FD9D44"
-        />
+        <ActionButton name="Edit" action={() => handleEdit()} color="#FD9D44" />
         <ActionButton
           name="Delete"
-          action={() => console.log('Delete')}
+          action={() => deleteAccount()}
           color="#ED5454"
         />
       </View>

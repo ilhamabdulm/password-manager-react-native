@@ -10,6 +10,7 @@ function ProfileScreen() {
   const { navigate } = useNavigation()
   const dispatch = useDispatch()
   const { statusLogin, userInfo } = useSelector((state) => state.userReducers)
+  const { accountList } = useSelector((state) => state.accountReducers)
 
   useEffect(() => {
     if (!statusLogin) {
@@ -36,7 +37,9 @@ function ProfileScreen() {
             <Text style={styles.infoText}>Email: {userInfo.email}</Text>
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.infoText}>Accounts saved: 3</Text>
+            <Text style={styles.infoText}>
+              Accounts saved: {accountList.length}
+            </Text>
           </View>
         </View>
         <ActionButton

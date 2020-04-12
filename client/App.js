@@ -7,6 +7,7 @@ import store from './src/store'
 import ScreenNavigator from './src/navigations/ScreenNavigator'
 
 export default function App() {
+  console.disableYellowBox = true
   return (
     <Provider store={store}>
       <NavigationContainer>

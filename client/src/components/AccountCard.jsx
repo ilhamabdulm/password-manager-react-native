@@ -3,12 +3,12 @@ import { TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
-function AccountCard({ url }) {
+function AccountCard({ url, id }) {
   const domain = url.substring(url.lastIndexOf('/') + 1)
   const { navigate } = useNavigation()
 
   return (
-    <TouchableOpacity onPress={() => navigate('Details')}>
+    <TouchableOpacity onPress={() => navigate('Details', { id: id })}>
       <View style={styles.containerBox}>
         <Image
           source={{

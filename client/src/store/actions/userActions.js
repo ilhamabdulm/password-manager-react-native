@@ -1,8 +1,8 @@
 import { LOGIN, USER_INFO, LOGOUT } from '../actionTypes'
 import axios from 'axios'
+import { AsyncStorage } from 'react-native'
 
 import { BASE_URL } from '../../config/server'
-import { AsyncStorage } from 'react-native'
 
 export const userLogin = (userData) => {
   return (dispatch, getState) => {
