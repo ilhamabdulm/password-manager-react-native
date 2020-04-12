@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 
 import DetailText from '../components/DetailText'
+import ActionButton from '../components/ActionButton'
 
 function DetailsScreen() {
   return (
@@ -24,16 +25,8 @@ function DetailsScreen() {
         </View>
       </View>
       <View style={styles.bottomElement}>
-        <TouchableOpacity>
-          <Text style={{ ...styles.actionButton, backgroundColor: '#FD9D44' }}>
-            Edit
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={{ ...styles.actionButton, backgroundColor: '#ED5454' }}>
-            Delete
-          </Text>
-        </TouchableOpacity>
+        <ActionButton name="Edit" action={() => console.log('Edit')} color="#FD9D44" />
+        <ActionButton name="Delete" action={() => console.log('Delete')} color="#ED5454" />
       </View>
     </View>
   )

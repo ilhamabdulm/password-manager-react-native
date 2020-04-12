@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
+import ActionButton from './ActionButton'
+
 function LoginBox() {
   const { navigate } = useNavigation()
 
@@ -16,12 +18,12 @@ function LoginBox() {
           secureTextEntry={true}
           placeholder="password"
         />
-        <TouchableOpacity
-          style={styles.submitBtn}
-          onPress={() => navigate('Home')}
-        >
-          <Text style={styles.submitText}>Submit</Text>
-        </TouchableOpacity>
+        <ActionButton
+          name="Submit"
+          action={() => navigate('Home')}
+          color="#69F0AE"
+        />
+
         <TouchableOpacity>
           <Text style={styles.registerText}>Click here to Register</Text>
         </TouchableOpacity>
@@ -74,30 +76,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4,
     elevation: 4,
-  },
-  submitBtn: {
-    backgroundColor: '#69F0AE',
-    borderRadius: 20,
-    width: 163,
-    height: 37,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    marginTop: 14,
-    marginBottom: 14,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  submitText: {
-    color: '#fafafa',
-    fontSize: 18,
-    letterSpacing: 1,
-    textAlign: 'center',
   },
   registerText: {
     color: '#3B89FE',
