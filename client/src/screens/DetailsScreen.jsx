@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native'
+import { View, Text, StyleSheet, Dimensions } from 'react-native'
 
 import DetailText from '../components/DetailText'
 import ActionButton from '../components/ActionButton'
@@ -25,8 +19,16 @@ function DetailsScreen() {
         </View>
       </View>
       <View style={styles.bottomElement}>
-        <ActionButton name="Edit" action={() => console.log('Edit')} color="#FD9D44" />
-        <ActionButton name="Delete" action={() => console.log('Delete')} color="#ED5454" />
+        <ActionButton
+          name="Edit"
+          action={() => console.log('Edit')}
+          color="#FD9D44"
+        />
+        <ActionButton
+          name="Delete"
+          action={() => console.log('Delete')}
+          color="#ED5454"
+        />
       </View>
     </View>
   )

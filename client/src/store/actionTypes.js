@@ -1,0 +1,8 @@
+export const LOGIN = 'LOGIN'
+export const USER_INFO = 'USER_INFO'
+export const LOGOUT = 'LOGOUT'
+export const FETCH_ACCOUNT = 'FETCH_ACCOUNT'
+export const ADD_ACCOUNT = 'ADD_ACCOUNT'
+export const ACCOUNT_DETAILS = 'ACCOUNT_DETAILS'
+export const DELETE_ACCOUNT = 'DELETE_ACCOUNT'
+export const EDIT_ACCOUNT = 'EDIT_ACCOUNT'

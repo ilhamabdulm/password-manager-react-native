@@ -1,26 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
 
 import ActionButton from './ActionButton'
+import { userLogin } from '../store/actions/userActions'
 
 function LoginBox() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { statusLogin } = useSelector((state) => state.userReducers)
   const { navigate } = useNavigation()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (statusLogin) {
+      navigate('Home')
+    }
+  }, [statusLogin])
+
+  const handleLogin = () => {
+    const userData = {
+      email,
+      password,
+    }
+    if (email.length < 1 || password.length < 1) {
+      console.warn('Email or Password must be provided')
+    } else {
+      dispatch(userLogin(userData))
+    }
+  }
 
   return (
     <View style={styles.loginBox}>
       <Text style={styles.loginText}>Login</Text>
       <View>
-        <TextInput style={styles.textInput} placeholder="email" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="email"
+          onChangeText={(text) => setEmail(text)}
+        />
         <TextInput
           style={styles.textInput}
           secureTextEntry={true}
           placeholder="password"
+          onChangeText={(text) => setPassword(text)}
         />
         <ActionButton
           name="Submit"
-          action={() => navigate('Home')}
+          action={() => handleLogin()}
           color="#69F0AE"
         />
 
@@ -66,7 +95,7 @@ const styles = StyleSheet.create({
     height: 38,
     marginTop: 14,
     color: '#fafafa',
-    paddingLeft: 20,
+    paddingHorizontal: 20,
     fontSize: 18,
     shadowColor: '#000',
     shadowOffset: {

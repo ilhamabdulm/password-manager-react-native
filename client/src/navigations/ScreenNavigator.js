@@ -5,8 +5,10 @@ import LoginScreen from '../screens/LoginScreen'
 import HomeScreen from '../screens/HomeScreen'
 import DetailsScreen from '../screens/DetailsScreen'
 import ProfileScreen from '../screens/ProfileScreen'
+import FormScreen from '../screens/FormScreen'
 
 import ProfileBtn from '../components/ProfileBtn'
+import { useSelector } from 'react-redux'
 
 const Stack = createStackNavigator()
 
@@ -27,8 +29,10 @@ const headerOptions = {
 }
 
 function ScreenNavigator() {
+  const { statusLogin } = useSelector((state) => state.userReducers)
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={statusLogin ? 'Home' : 'Login'}>
       <Stack.Screen
         name="Login"
         component={LoginScreen}
@@ -47,6 +51,11 @@ function ScreenNavigator() {
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name="Form"
+        component={FormScreen}
         options={headerOptions}
       />
     </Stack.Navigator>

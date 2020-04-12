@@ -1,18 +1,9 @@
 import React, { useState } from 'react'
-import {
-  View,
-  Text,
-  Dimensions,
-  ImageBackground,
-  StyleSheet,
-} from 'react-native'
+import { View, Text, ImageBackground, StyleSheet } from 'react-native'
 
 import LoginBox from '../components/LoginBox'
 
-const width = Dimensions.get('window').width
-const height = Dimensions.get('window').height
-
-function LoginScreen() {
+function LoginScreen(props) {
   const [registerForm, setRegister] = useState(false)
 
   const changeForm = (state) => {

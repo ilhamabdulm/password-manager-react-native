@@ -1,18 +1,21 @@
 import React from 'react'
 import { View, ImageBackground, StyleSheet, Dimensions } from 'react-native'
+import { useSelector } from 'react-redux'
 
 import WelcomeCard from '../components/WelcomeCard'
 import AccountCard from '../components/AccountCard'
 import { ScrollView } from 'react-native-gesture-handler'
 
 function HomeScreen() {
+  const { userInfo } = useSelector((state) => state.userReducers)
+
   return (
     <ImageBackground
       source={require('../../assets/home-bg.png')}
       style={styles.imageBackground}
     >
       <View style={styles.welcomeCard}>
-        <WelcomeCard />
+        <WelcomeCard name={userInfo.name} />
       </View>
       <ScrollView
         style={styles.accountList}

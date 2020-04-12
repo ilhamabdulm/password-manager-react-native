@@ -2,14 +2,17 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
-function WelcomeCard() {
+function WelcomeCard({ name }) {
+  const { navigate } = useNavigation()
+
   return (
     <View style={styles.boxContainer}>
-      <Text style={styles.userText}>Hello, Ilham Abdul Malik</Text>
+      <Text style={styles.userText}>Hello, {name}</Text>
       <View style={styles.actionArea}>
         <Text style={styles.hintText}>Manage your accounts below</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('Form')}>
           <MaterialIcons name="add-box" size={20} color="#fafafa" />
         </TouchableOpacity>
       </View>
