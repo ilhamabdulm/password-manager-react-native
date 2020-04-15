@@ -29,6 +29,8 @@ function LoginBox() {
       console.warn('Email or Password must be provided')
     } else {
       dispatch(userLogin(userData))
+      setEmail('')
+      setPassword('')
     }
   }
 

@@ -57,6 +57,7 @@ export const removeAccount = (id, token) => {
     axios
       .delete(`${BASE_URL}/accounts/${id}`, { headers: { token } })
       .then((response) => {
+        alert('Account has been removed')
         const newList = accountList.filter((acc) => acc._id !== id)
         dispatch({
           type: DELETE_ACCOUNT,
@@ -66,6 +67,7 @@ export const removeAccount = (id, token) => {
           },
         })
       })
+      .catch((err) => console.log(err))
   }
 }
 
@@ -74,6 +76,7 @@ export const addAccount = (token, inputData) => {
     axios
       .post(`${BASE_URL}/accounts`, inputData, { headers: { token } })
       .then((response) => {
+        alert('New account added')
         dispatch(fetchAccount(token))
       })
       .catch((err) => console.log(err))
@@ -85,6 +88,7 @@ export const editAccount = (token, inputData, id) => {
     axios
       .put(`${BASE_URL}/accounts/${id}`, inputData, { headers: { token } })
       .then((response) => {
+        alert('Account edited')
         dispatch(fetchAccount(token))
         dispatch(fetchDetails(id, token))
       })

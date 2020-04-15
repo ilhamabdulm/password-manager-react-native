@@ -58,15 +58,32 @@ function DetailsScreen({ route, navigator }) {
   const handleEdit = async () => {
     try {
       const inputData = {
-        url,
-        username,
-        password,
+        url: url.length < 1 ? accountData.url : url,
+        username: username.length < 1 ? accountData.username : username,
+        password: password.length < 1 ? accountData.password : password,
       }
       console.log(inputData)
       const token = await AsyncStorage.getItem('token')
       dispatch(editAccount(token, inputData, accountId))
     } catch (err) {
       console.log(err)
+    }
+  }
+
+  const handleInput = (type, text) => {
+    console.log(text)
+    switch (type) {
+      case 'url':
+        setUrl(text)
+        break
+      case 'username':
+        setUsername(text)
+        break
+      case 'password':
+        setPassword(text)
+        break
+      default:
+        break
     }
   }
 
@@ -78,17 +95,20 @@ function DetailsScreen({ route, navigator }) {
           <DetailText
             title="URL"
             subtitle={accountData.url}
-            action={(text) => setUrl(text)}
+            type="url"
+            action={handleInput}
           />
           <DetailText
             title="Username or Email"
             subtitle={accountData.username}
-            action={(text) => setUsername(text)}
+            type="username"
+            action={handleInput}
           />
           <DetailText
             title="Password"
             subtitle={accountData.password}
-            action={(text) => setPassword(text)}
+            type="password"
+            action={handleInput}
           />
         </View>
       </View>

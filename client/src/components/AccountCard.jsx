@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
 function AccountCard({ url, id }) {
-  const domain = url.substring(url.lastIndexOf('/') + 1)
+  const domain = url ? url.substring(url.lastIndexOf('/') + 1) : ''
   const { navigate } = useNavigation()
 
   return (

@@ -31,35 +31,51 @@ const headerOptions = {
 function ScreenNavigator() {
   const { statusLogin } = useSelector((state) => state.userReducers)
 
-  return (
-    <Stack.Navigator initialRouteName={statusLogin ? 'Home' : 'Login'}>
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ ...headerOptions, headerLeft: null }}
-      />
-      <Stack.Screen
-        name="Details"
-        component={DetailsScreen}
-        options={headerOptions}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={headerOptions}
-      />
-      <Stack.Screen
-        name="Form"
-        component={FormScreen}
-        options={headerOptions}
-      />
-    </Stack.Navigator>
-  )
+  const renderCondition = () => {
+    if (!statusLogin) {
+      return (
+        <Stack.Navigator initialRouteName={statusLogin ? 'Home' : 'Login'}>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      )
+    } else {
+      return (
+        <Stack.Navigator initialRouteName={statusLogin ? 'Home' : 'Login'}>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ ...headerOptions, headerLeft: null }}
+          />
+          <Stack.Screen
+            name="Details"
+            component={DetailsScreen}
+            options={headerOptions}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={headerOptions}
+          />
+          <Stack.Screen
+            name="Form"
+            component={FormScreen}
+            options={headerOptions}
+          />
+        </Stack.Navigator>
+      )
+    }
+  }
+
+  return renderCondition()
 }
 
 export default ScreenNavigator
